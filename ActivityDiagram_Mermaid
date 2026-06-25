@@ -1,23 +1,79 @@
-flowchart TD
-    Start([Start Racer Registration]) --> Login[Racer logs in]
-    Login --> Select[Selects a race]
-    Select --> Check1{Is registration open?}
-    Check1 -- No --> End1([End])
-    Check1 -- Yes --> Check2{Is race full?}
+flowchart TB
+    
+    n5 --> DisplayLogin
+    DisplayLogin --> Login
+    Login --> DisplayListRaces
+    SelectRace --> DisplayConfirmation
+    DisplayConfirmation --> DoesRacerConfirm
+    
+    DisplayListRaces -- SelectRace --> SelectRace
+    DisplayListRaces -- Logout --> Logout
 
-    Check2 -- Yes --> End2([End])
-    Check2 -- No --> Check3{Is race official?}
 
-    Check3 -- No --> Check5{Does racer meet category for race?}
-    Check3 -- Yes --> Check4{Does racer have a valid license?}
+    
+    DoesRacerConfirm -- Confirm --> RegOpen
+    DoesRacerConfirm -- Cancel --> DisplayListRaces
 
-    Check4 -- Yes --> Check5
-    Check4 -- No --> Buy[Prompt racer to buy a license]
-    Buy --> Bought{Did racer purchase a license?}
-    Bought -- No --> End3([End])
-    Bought -- Yes --> Check5
+    RegOpen -- No --> DisplayUnsuccessful
+    RegOpen -- Yes --> RaceFull
 
-    Check5 -- No --> End4([End])
-    Check5 -- Yes --> Submit[Racer registers for race]
-    Submit --> Save[Save race registration to database]
-    Save --> Done([End])
+    RaceFull -- Yes --> DisplayUnsuccessful
+    RaceFull -- No --> RaceOfficial
+
+    RaceOfficial -- No --> RaceCat
+    RaceOfficial -- Yes --> ValidLicence
+
+    ValidLicence -- Yes --> RaceCat
+    ValidLicence -- No --> DisplayPurchase
+
+    RaceCat -- No --> DisplayUnsuccessful
+    RaceCat -- Yes --> Submit
+
+    DisplayPurchase --> Bought
+
+    Bought -- No --> DisplayListRaces
+    Bought -- Yes --> RaceCat
+
+    DisplayUnsuccessful --> BackorLogout
+
+    BackorLogout -- Back --> Back
+    BackorLogout -- Logout --> Logout
+    
+    Back --> DisplayListRaces
+    
+    DisplaySuccessful --> Logout
+    
+    Submit --> Save
+
+    Save --> DisplaySuccessful
+    
+    Logout --> n6
+    
+    n6["Stop"]
+    n5@{ shape: f-circ}
+    n6@{ shape: stop}
+
+
+    Login("Racer Logs in")
+    SelectRace("Racer selects race")
+    Save("Save race registration to database")
+    Back("User Selects Back")
+    Submit("Racer registers for race")
+
+    DisplayListRaces("Display List of races")
+    DisplayLogin("Display Login Page")
+    DisplayConfirmation("Display Confirmation Popup")
+    DisplayUnsuccessful("Display Unsuccessful Page")
+    DisplayPurchase("Display License Purchasing Page")
+    DisplaySuccessful("Display Registration Successful Page")
+
+
+    RegOpen{"Is registration open?"}
+    RaceFull{"is race full?"}
+    RaceOfficial{"Is race official"}
+    RaceCat{Does racer meet category for race?}
+    ValidLicence{"Does racer have a valid license"}
+    Bought{"Did racer purchase a license?"}
+    DoesRacerConfirm{"Confirm or Cancel"}
+    BackorLogout{"Go Back or Logout"}
+
