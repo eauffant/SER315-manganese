@@ -1,0 +1,77 @@
+import java.util.Scanner;
+
+public class UserDisplay {
+
+    Scanner scnr = new Scanner(System.in);
+
+    public String[] displaySignUpPage() {
+        System.out.println("------ Sign Up ------");
+
+        System.out.printf("Enter User ID: ");
+        String userID = scnr.nextLine();
+
+        System.out.printf("Enter Password: ");
+        String password = scnr.nextLine();
+
+        System.out.printf("Enter Name: ");
+        String name = scnr.nextLine();
+
+        System.out.printf("Enter User Type: ");
+        String userType = scnr.nextLine();
+
+        System.out.printf("Enter Email: ");
+        String email = scnr.nextLine();
+
+        return new String[]{userID, password, name, userType, email};
+    }
+    
+    public String[] displayLoginPage() {
+        System.out.println("------ Login ------");
+
+        System.out.print("Enter User ID: ");
+        String userID = scnr.nextLine();
+
+        System.out.print("Enter password: ");
+        String password = scnr.nextLine();
+
+        return new String[]{userID, password};
+    }
+
+    public void displayProfilePage(User user) {
+        System.out.println("------ Profile Page ------");
+        System.out.printf("User ID: %s\n", user.getUserID());
+        System.out.printf("Password: %s\n", user.getPassword());
+        System.out.printf("Name: %s\n", user.getName());
+        System.out.printf("User Type: %s\n", user.getUserType());
+        System.out.printf("Email: %s\n", user.getEmail());
+    }
+
+    public String[] displayProfileUpdates(User user) {
+        System.out.println("------ Update Profile ------");
+        System.out.println("Press enter to skip attribute");
+
+        System.out.printf("Name: %s, New Name: ", user.getName());
+        String name = scnr.nextLine();
+
+        System.out.printf("Email: %s, New Email: ", user.getEmail());
+        String email = scnr.nextLine();
+
+        System.out.printf("Password: XXXXXXX, New Password: ");
+        String password = scnr.nextLine();
+
+        return new String[]{name, email, password};
+
+
+    }
+
+    public void displayAllUsers(UserDatabase db) {
+        System.out.printf("| %-20s | %-20s | %-15s | %-30s |%n", "Name", "User ID", "User Type", "Email");
+        System.out.println("--------------------------------------------------------------------------------------------------");
+        
+        for(User user : db.userList.values()) {
+            System.out.printf(" %-22s  %-21s  %-16s  %-31s%n", user.getName(), user.getUserID(), user.getUserType(), user.getEmail());
+            
+        }
+    }
+
+}
