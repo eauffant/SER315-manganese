@@ -1,0 +1,23 @@
+flowchart TD
+    Start([Start Racer Registration]) --> Login[Racer logs in]
+    Login --> Select[Selects a race]
+    Select --> Check1{Is registration open?}
+    Check1 -- No --> End1([End])
+    Check1 -- Yes --> Check2{Is race full?}
+
+    Check2 -- Yes --> End2([End])
+    Check2 -- No --> Check3{Is race official?}
+
+    Check3 -- No --> Check5{Does racer meet category for race?}
+    Check3 -- Yes --> Check4{Does racer have a valid license?}
+
+    Check4 -- Yes --> Check5
+    Check4 -- No --> Buy[Prompt racer to buy a license]
+    Buy --> Bought{Did racer purchase a license?}
+    Bought -- No --> End3([End])
+    Bought -- Yes --> Check5
+
+    Check5 -- No --> End4([End])
+    Check5 -- Yes --> Submit[Racer registers for race]
+    Submit --> Save[Save race registration to database]
+    Save --> Done([End])
