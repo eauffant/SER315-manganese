@@ -1,0 +1,225 @@
+---
+config:
+    layout: elk
+    elk:
+        nodePlacementStrategy: LINEAR_SEGMENTS
+        layered.spacing.nodeNodeBetweenLayers: 25
+        spacing.nodeNode: 10
+        mergeEdges: false
+---
+
+classDiagram
+
+class User {
+    +userId
+    +password
+    +name
+    +userType
+    +email
+}
+
+class Racer {
+    +creditCardInformation
+    +podiumCount
+}
+
+class Organizer {
+
+}
+
+class Administrator {
+
+}
+
+class RacerController {
+    +purchaseLicense()
+    +registerForRace()
+    +reviewRace()
+    +upgradeCategory()
+}
+
+class License {
+    +licenseId
+    +validForOneYear
+    +issueDate
+    +expirationDate
+
+}
+
+class Category {
+    +categoryLevel
+    +description
+}
+
+class Registration {
+    +registrationId
+    +registrationDate
+    +status
+    +confirmRegistration()
+    +cancelRegistration()
+}
+
+class Result {
+    +resultId
+    +placement
+    +isPodium()
+    +recordResult()
+}
+
+class Review {
+    +reviewId
+    +rating
+    +comment
+    +submitReview()
+}
+
+class OrganizerController {
+    +createRace()
+    +manageRace()
+    +enterResults()
+    +manageRegistrationLimits()
+    +openRegistration()
+    +closeRegistration()
+}
+
+class RaceEvent {
+    +raceId
+    +date
+    +type
+    +miles
+    +route
+    +officialStatus
+    +lastDayOfRegistration
+}
+
+class Race {
+    +participantLimit
+}
+
+class AdminController {
+    +manageUsers()
+    +manageLicenses()
+    +manageSystemSettings()
+    +sendNotification()
+}
+
+class Notification {
+    +notificationId
+    +message
+    +type
+    +dateSent
+    +send()
+}
+
+
+class UserController {
+    +signUp()
+    +login()
+    +updateProfile()
+}
+
+class UserDisplay {
+    +displayLoginPage()
+    +displayProfilePage()
+}
+
+class RacerDisplay {
+    +displayRegistrationPage()
+    +displaySignUpPage()
+    +displayRaceReview()
+    +displayRacerInfo()
+    +displayRaceResults()
+    +displayRaceInfo()
+}
+
+class OrganizerDisplay {
+    +displayRaceCreationPage()
+    +displayResultsEntryPage()
+    +displayRaceManagementPage()
+}
+
+class AdminDisplay {
+    +displayUserManagementPage()
+    +displaySystemSettings()
+    +displayNotificationPage()
+}
+
+class RaceResultsDatabase {
+    +Map~resultId, Result~ raceResults
+}
+
+class RacerRegistrationDatabase {
+    +Map~registrationId, Registration~ Registrations
+}
+
+class UserDatabase {
+    +Map~userId, User~ userList
+}
+
+class ReviewDatabase {
+    +Map~reviewId, Review~ raceReviews
+}
+
+class RaceDatabase {
+    +Map~raceId, Race~ raceList
+}
+
+User <|-- Racer
+User <|-- Organizer
+User <|-- Administrator
+
+RacerController ..>  License : purchases
+License "1" --> "1" Category : has
+
+RacerController ..>  Registration : submits
+
+OrganizerController ..>  Race : creates
+OrganizerController  ..>  Result : enters
+
+Racer "1" --> "0..1"  License : has
+
+RacerController ..>  Review : writes
+
+AdminController  ..>  Notification : sends
+Notification "0..*" --> "1" Racer : sentTo
+
+Racer --> Result : has
+RaceEvent "1" --> "5" Race : has
+Race "1" --> "1" Category : has
+
+Review ..> ReviewDatabase : addsTo
+Registration ..> RacerRegistrationDatabase : addsTo
+User ..> UserDatabase : addsTo
+Result ..> RaceResultsDatabase : addsTo
+
+UserController <|-- AdminController
+UserController <|-- OrganizerController
+UserController <|-- RacerController
+
+UserController <.. User : validates
+RacerController <.. Racer : validates
+OrganizerController <.. Organizer : validates
+AdminController <.. Administrator : validates
+
+UserController ..> UserDisplay : creates
+RacerController ..> RacerDisplay : creates
+OrganizerController ..> OrganizerDisplay : creates
+AdminController ..> AdminDisplay : creates
+
+UserDisplay ..> UserController : sends input
+RacerDisplay ..> RacerController : sends input
+OrganizerDisplay ..> OrganizerController : sends input
+AdminDisplay ..> AdminController : sends input
+
+RacerDisplay ..> RaceResultsDatabase : displays
+RacerDisplay ..> RaceDatabase : displays
+RacerDisplay ..> Race : displays
+RacerDisplay ..> Racer : displays
+
+OrganizerDisplay ..> Race : displays
+OrganizerDisplay ..> RaceResultsDatabase : displays
+OrganizerDisplay ..> RacerRegistrationDatabase : displays
+
+AdminDisplay ..> UserDatabase : displays
+AdminDisplay ..> Notification : displays
+AdminDisplay ..> Racer : displays
