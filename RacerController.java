@@ -22,20 +22,14 @@ public class RacerController {
             return;
         }
 
-        // Is registration open?
-        if (!race.isRegistrationOpen()) {
-            System.out.println("Registration is closed for this race.");
+        // Delegates to RegistrationState to answer registration open?
+        if (!race.register()) {
+            System.out.println("Registration is currently closed for this race.");
             return;
         }
 
-        // Is race full?
-        if (race.isFull()) {
-            System.out.println("This race is full.");
-            return;
-        }
-
-        // Is race official? Only official races require a license.
-        if (race.getIsOffical()) {
+        // Delegates to OfficialityState  to answer is race official? Only official races require a license.
+        if (race.requireLicense()) {
             // Does racer have a valid license?
             if (racer.license == null || !racer.license.isValid()) {
                 // Prompt racer to buy a license
@@ -51,6 +45,12 @@ public class RacerController {
                     return;
                 }
             }
+        }
+
+        // Delegates to CapacityState to answer is race full?
+        if (!race.addRacer(racer)) {
+            System.out.println("This race is full.");
+            return;
         }
 
         // Does racer meet category for race?

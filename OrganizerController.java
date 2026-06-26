@@ -26,7 +26,6 @@ public class OrganizerController extends UserController {
         boolean officialStatus = Boolean.parseBoolean(raceFields[5]);
         LocalDate lastDayOfRegistration = LocalDate.parse(raceFields[6]);
         int participantLimit = Integer.parseInt(raceFields[7]);
-
         Race newRace = new Race(raceId, date, type, miles, route, officialStatus, lastDayOfRegistration, participantLimit);
         raceDatabase.addRace(newRace);
         System.out.println("Race created successfully!");
@@ -48,23 +47,25 @@ public class OrganizerController extends UserController {
     }
 
     public void openRegistration(String raceId) {
-        setRegistrationStatus(raceId, true);
-    }
-
-    public void closeRegistration(String raceId) {
-        setRegistrationStatus(raceId, false);
-    }
-
-    public void setRegistrationStatus(String raceId, boolean isOpen) {
         Race race = raceDatabase.getRace(raceId);
         if (race != null) {
-            race.setIsOffical(isOpen);
-            String status = isOpen ? "opened" : "closed";
-            System.out.println("Registration " + status + " for race: " + raceId);
+            race.openRegistration();
+            System.out.println("Registration is now open.");
         } else {
             System.out.println("Race not found.");
         }
     }
+
+    public void closeRegistration(String raceId) {
+        Race race = raceDatabase.getRace(raceId);
+        if (race != null) {
+            race.closeRegistration();
+            System.out.println("Registration is now closed.");
+        } else {
+            System.out.println("Race not found.");
+        }
+    }
+
 
     public void manageRegistrationLimits(String raceId, int newLimit) {
         Race race = raceDatabase.getRace(raceId);
