@@ -1,12 +1,35 @@
 import java.time.LocalDate;
+import java.util.ArrayList;
 
-public class AdminController extends UserController {
+public class AdminController extends UserController implements Subject {
 
     AdminDisplay adminDisplay;
+    private ArrayList<Observer> subscribers = new ArrayList<>();
 
     public AdminController(UserDatabase userDatabase, UserDisplay userDisplay, AdminDisplay adminDisplay) {
         super(userDatabase, userDisplay);
         this.adminDisplay = adminDisplay;
+    }
+
+    @Override
+    public void addObserver(Observer o) {
+        subscribers.add(o);
+    }
+
+    @Override
+    public void removeObserver(Observer o) {
+        subscribers.add(o);
+    }
+
+    @Override
+    public void notifyObservers(String message) {
+        for (Observer o : subscribers) {
+            o.update(message);
+        }
+    }
+
+    public void sendNotification(String message, String type) {
+        notifyObservers(message);
     }
 
     public void manageUsers() {

@@ -1,18 +1,18 @@
 public class Category {
 
-    String categoryLevel;
+    int categoryLevel;
     String description;
 
-    public Category(String categoryLevel, String description) {
+    public Category(int categoryLevel, String description) {
         this.categoryLevel = categoryLevel;
         this.description = description;
     }
 
-    public String getCategoryLevel() {
+    public int getCategoryLevel() {
         return this.categoryLevel;
     }
 
-    public void setCategoryLevel(String categoryLevel) {
+    public void setCategoryLevel(int categoryLevel) {
         this.categoryLevel = categoryLevel;
     }
 

@@ -32,13 +32,16 @@ public class Main {
         Organizer organizer1 = new Organizer("org1", "orgpass", "Tom Baker", "Organizer", "tbaker@email.com");
         Administrator admin1 = new Administrator("admin1", "adminpass", "Admin User", "Administrator", "admin@email.com");
 
+        adminController.addObserver(racer1);
+        adminController.addObserver(racer2);
+
         userDatabase.addUser(racer1);
         userDatabase.addUser(racer2);
         userDatabase.addUser(organizer1);
         userDatabase.addUser(admin1);
 
-        Category catBeginner = new Category("Beginner", "Open to all skill levels");
-        Category catAdvanced = new Category("Advanced", "Competitive racers only");
+        Category catBeginner = new Category(1, "Open to all skill levels");
+        Category catAdvanced = new Category(5, "Competitive racers only");
 
         // race1: official, requires Beginner license
         Race race1 = new Race("race1", LocalDate.now().plusWeeks(6), "Road", 25, "Around Lake", true, LocalDate.now().plusWeeks(2), 200);
@@ -156,7 +159,7 @@ public class Main {
         if (choice == 1) {
             adminController.manageUsers();
         } else if (choice == 2) {
-            adminController.sendNotification(racer1, "Your registration is confirmed!", "Info");
+            adminController.sendNotification("Your registration is confirmed!", "Info");
         } else if (choice == 3) {
             adminController.manageSystemSettings();
         }
