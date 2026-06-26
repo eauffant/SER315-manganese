@@ -176,6 +176,62 @@ class Subject {
     +notifyObservers(message)
 }
 
+class RegistrationState {
+    <<interface>>
+    +openRegistration()
+    +closeRegistration()
+    +register()
+}
+
+class OpenRegistrationState {
+    +openRegistration()
+    +closeRegistration()
+    +register()
+}
+
+class ClosedRegistrationState {
+    +openRegistration()
+    +closeRegistration()
+    +register()
+}
+
+class OfficialityState {
+    <<interface>>
+    +requireLicense()
+}
+
+class OfficialState {
+    +requireLicense()
+}
+
+class UnofficialState {
+    +requireLicense()
+}
+
+class CapacityState {
+    <<interface>>
+    +addRacer()
+}
+
+class FullCapacityState {
+    +addRacer()
+}
+
+class AvailableCapacityState {
+    +addRacer()
+}
+
+RegistrationState <|.. OpenRegistrationState
+RegistrationState <|.. ClosedRegistrationState
+OfficialityState <|.. OfficialState
+OfficialityState <|.. UnofficialState
+CapacityState <|.. FullCapacityState
+CapacityState <|.. AvailableCapacityState
+
+RaceEvent "1" --> "1" RegistrationState
+RaceEvent "1" --> "1" OfficialityState
+Race "1" --> "1" CapacityState
+
 User <|-- Racer
 User <|-- Organizer
 User <|-- Administrator
