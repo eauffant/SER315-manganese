@@ -33,7 +33,6 @@ public class Main {
         Administrator admin1 = new Administrator("admin1", "adminpass", "Admin User", "Administrator", "admin@email.com");
 
         adminController.addObserver(racer1);
-        adminController.addObserver(racer2);
 
         userDatabase.addUser(racer1);
         userDatabase.addUser(racer2);
