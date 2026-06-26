@@ -164,9 +164,24 @@ class RaceDatabase {
     +Map~raceId, Race~ raceList
 }
 
+class Observer {
+    <<interface>>
+    +update(Message)
+}
+
+class Subject {
+    <<interface>>
+    +addObserver(o)
+    +removeObserver(o)
+    +notifyObservers(message)
+}
+
 User <|-- Racer
 User <|-- Organizer
 User <|-- Administrator
+
+Racer ..|> Observer
+AdminController ..|> Subject
 
 RacerController ..>  License : purchases
 License "1" --> "1" Category : has
