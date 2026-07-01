@@ -71,9 +71,9 @@ public class RacerController {
     public boolean purchaseLicense(Racer racer) {
         String[] fields = racerDisplay.displayLicensePurchasePage();
         String licenseId = fields[0];
-        String categoryLevel = fields[1];
+        int categoryLevel = Integer.parseInt(fields[1]);
 
-        if (licenseId.isEmpty() || categoryLevel.isEmpty()) {
+        if (licenseId.isEmpty() || categoryLevel == 0) {
             return false;
         }
 
@@ -96,7 +96,7 @@ public class RacerController {
         }
 
         for (Category category : race.getCategories()) {
-            if (category.getCategoryLevel().equals(racer.license.getCategory().getCategoryLevel())) {
+            if (category.getCategoryLevel() == (racer.license.getCategory().getCategoryLevel())) {
                 return true;
             }
         }
