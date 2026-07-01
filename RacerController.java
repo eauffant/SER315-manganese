@@ -15,27 +15,27 @@ public class RacerController {
     public void registerForRace(Racer racer) {
         // Racer selects a race
         String raceId = racerDisplay.displayRegistrationPage();
-        Race race = raceDatabase.getRace(raceId);
+        RaceEvent raceEvent = raceDatabase.getRace(raceId);
 
-        if (race == null) {
+        if (raceEvent == null) {
             System.out.println("Race not found.");
             return;
         }
 
         // Is registration open?
-        if (!race.isRegistrationOpen()) {
+        if (!raceEvent.isRegistrationOpen()) {
             System.out.println("Registration is closed for this race.");
             return;
         }
 
         // Is race full?
-        if (race.isFull()) {
+        if (raceEvent.getRaces().get(racer.getLicense().getCategory().getCategoryLevel()).isFull()) {
             System.out.println("This race is full.");
             return;
         }
 
         // Is race official? Only official races require a license.
-        if (race.getIsOffical()) {
+        if (raceEvent.getIsOffical()) {
             // Does racer have a valid license?
             if (racer.license == null || !racer.license.isValid()) {
                 // Prompt racer to buy a license
@@ -54,7 +54,7 @@ public class RacerController {
         }
 
         // Does racer meet category for race?
-        if (!meetsCategoryRequirement(racer, race)) {
+        if (!meetsCategoryRequirement(racer, raceEvent.getRaces().get(racer.getLicense().getCategory().getCategoryLevel()))) {
             System.out.println("You do not meet the category requirements for this race.");
             return;
         }
@@ -63,7 +63,7 @@ public class RacerController {
         String registrationId = "reg-" + racer.getUserID() + "-" + raceId;
         Registration registration = new Registration(registrationId, LocalDate.now(), true);
         registrationDatabase.addRegistration(registration);
-        race.racersRegistered.add(racer);
+        raceEvent.getRaces().get(racer.getLicense().getCategory().getCategoryLevel()).racersRegistered.add(racer);
 
         System.out.println("Registration successful! Registration ID: " + registrationId);
     }
@@ -71,11 +71,13 @@ public class RacerController {
     public boolean purchaseLicense(Racer racer) {
         String[] fields = racerDisplay.displayLicensePurchasePage();
         String licenseId = fields[0];
-        String categoryLevel = fields[1];
+        String categoryLevelStr = fields[1];
 
-        if (licenseId.isEmpty() || categoryLevel.isEmpty()) {
+        if (licenseId.isEmpty() || categoryLevelStr.isEmpty()) {
             return false;
         }
+
+        int categoryLevel = Integer.parseInt(categoryLevelStr);
 
         Category category = new Category(categoryLevel, "");
         License newLicense = new License(licenseId, true, LocalDate.now(), LocalDate.now().plusYears(1), category);
@@ -85,21 +87,17 @@ public class RacerController {
     }
 
     public boolean meetsCategoryRequirement(Racer racer, Race race) {
-        // If race has no category restrictions, anyone can enter
-        if (race.getCategories().isEmpty()) {
-            return true;
-        }
 
         // Racer must have a license with a matching category
         if (racer.license == null) {
             return false;
         }
 
-        for (Category category : race.getCategories()) {
-            if (category.getCategoryLevel().equals(racer.license.getCategory().getCategoryLevel())) {
-                return true;
-            }
+        
+        if (racer.getLicense().getCategory().getCategoryLevel() == (race.getCategory().getCategoryLevel())) {
+            return true;
         }
+        
         return false;
     }
 
