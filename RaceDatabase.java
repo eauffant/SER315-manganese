@@ -2,13 +2,13 @@ import java.util.HashMap;
 
 public class RaceDatabase {
     
-    HashMap<String, Race> raceList = new HashMap<>();
+    HashMap<String, RaceEvent> raceList = new HashMap<>();
 
-    public void addRace(Race race) {
-        raceList.put(race.getRaceID(), race);
+    public void addRaceEvent(RaceEvent raceEvent) {
+        raceList.put(raceEvent.getRaceID(), raceEvent);
     }
 
-    public Race getRace(String raceID) {
+    public RaceEvent getRace(String raceID) {
         return raceList.get(raceID);
     }
     

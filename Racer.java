@@ -13,4 +13,8 @@ public class Racer extends User implements Observer {
         System.out.println("Notification for " + getName() + ": " + "Category Upgraded!");
     }
 
+    public License getLicense() {
+        return this.license;
+    }
+
 }

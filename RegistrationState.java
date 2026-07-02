@@ -1,5 +1,5 @@
 public interface RegistrationState {
-    void openRegistration(Race race);
-    void closeRegistration(Race race);
+    void openRegistration(RaceEvent race);
+    void closeRegistration(RaceEvent race);
     boolean register();
 }

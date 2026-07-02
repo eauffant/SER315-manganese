@@ -4,89 +4,17 @@ import java.util.ArrayList;
 
 public class Race {
 
-    String raceID;
-    LocalDate date;
-    String type;
-    int miles;
-    String route;
-    LocalDate lastDayOfRegistration;
-    ArrayList<Category> categories = new ArrayList<>();
     int participantLimit;
-    ArrayList<User> racersRegistered = new ArrayList<>();
-    RegistrationState registrationState;    // State Design Pattern usage
-    OfficialityState officialityState;
+    Category category;
     CapacityState capacityState;
+    ArrayList<User> racersRegistered = new ArrayList<>();
 
-    public Race(String raceID, LocalDate date, String type, int miles, String route, boolean officialStatus, LocalDate lastDayOfRegistration, int participantLimit) {
-        this.raceID = raceID;
-        this.date = date;
-        this.type = type;
-        this.miles = miles;
-        this.route = route;
-        this.lastDayOfRegistration = lastDayOfRegistration;
+    public Race(int participantLimit, Category category) {
         this.participantLimit = participantLimit;
-        // determines what states the variables are in
-        this.officialityState = officialStatus ? new OfficialState() : new UnofficialState(); // if false, no license required and thus unofficial. vice versa for true.
-        this.registrationState = !LocalDate.now().isAfter(lastDayOfRegistration) ? new OpenRegistrationState() : new ClosedRegistrationState();
+        this.category = category;
         this.capacityState = new AvailableCapacityState(); // starts new race as available capacity
     }
-
-    public String getRaceID(){
-        return this.raceID;
-    }
-
-    public void setRaceID(String raceID){
-        this.raceID = raceID;
-    }
-
-    public String getDate(){
-    	return this.date.format(DateTimeFormatter.ofPattern("MMMM d'th'"));
-    }
-
-    public void setDate(LocalDate date){
-        this.date = date;
-    }
-
-    public String getType(){
-        return this.type;
-    }
-
-    public void setType(String type){
-        this.type = type;
-    }
-
-    public int getMiles(){
-        return this.miles;
-    }
-
-    public void setMiles(int miles){
-        this.miles = miles;
-    }
-
-    public String getRoute(){
-        return this.route;
-    }
-
-    public void setRoute(String route){
-        this.route = route;
-    }
-
-    public String getLastDayOfRegistration(){
-        return this.lastDayOfRegistration.format(DateTimeFormatter.ofPattern("MMMM d'th'"));
-    }
-
-    public void setLastDayOfRegistration(LocalDate lastDayOfRegistration){
-        this.lastDayOfRegistration = lastDayOfRegistration;
-    }
-
-    public ArrayList<Category> getCategories() {
-        return this.categories;
-    }
-
-    public void addCategory(Category category) {
-        this.categories.add(category);
-    }
-
+    
     public int getParticipantLimit(){
         return this.participantLimit;
     }
@@ -95,34 +23,15 @@ public class Race {
         this.participantLimit = participantLimit;
     }
 
-
-    // Registration State functions
-    public void setRegistrationState(RegistrationState registrationState) {
-        this.registrationState = registrationState;
+    public Category getCategory() {
+        return this.category;
     }
 
-    public void openRegistration() {
-        this.registrationState.openRegistration(this);
+    public boolean isFull() {
+        return this.racersRegistered.size() >= this.participantLimit;
     }
 
-    public void closeRegistration() {
-        this.registrationState.closeRegistration(this);
-    }
-
-    public boolean register() {
-        return this.registrationState.register();
-    }
-
-    // Officiality State Functions
-    public void setOfficialityState(OfficialityState officialityState) {
-        this.officialityState = officialityState;
-    }
-
-    public boolean requireLicense() {
-        return this.officialityState.requireLicense();
-    }
-
-    // Capacity State Functions
+        // Capacity State Functions
     public void setCapacityState(CapacityState capacityState) {
         this.capacityState = capacityState;
     }
@@ -130,5 +39,6 @@ public class Race {
     public boolean addRacer(Racer racer) {
         return this.capacityState.addRacer(this, racer);
     }
+
 
 }

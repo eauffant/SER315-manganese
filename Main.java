@@ -40,26 +40,49 @@ public class Main {
         userDatabase.addUser(organizer1);
         userDatabase.addUser(admin1);
 
-        Category catBeginner = new Category(1, "Open to all skill levels");
-        Category catAdvanced = new Category(5, "Competitive racers only");
+        Category cat1 = new Category(1, "Beginners Only");
+        Category cat2 = new Category(2, "Beginner to Intermediate Raacers");
+        Category cat3 = new Category(3, "Intermediate Racers");
+        Category cat4 = new Category(4, "Semi-Pro Racers");
+        Category cat5 = new Category(5, "Professional Competitive Racers");
 
-        // race1: official, requires Beginner license
-        Race race1 = new Race("race1", LocalDate.now().plusWeeks(6), "Road", 25, "Around Lake", true, LocalDate.now().plusWeeks(2), 200);
-        race1.addCategory(catBeginner);
+        //race creation
+        Race race1 = new Race(200, cat1);
+        Race race2 = new Race(200, cat2);
+        Race race3 = new Race(200, cat3);
+        Race race4 = new Race(200, cat4);
+        Race race5 = new Race(200, cat5);
 
-        // race2: official, requires Advanced license
-        Race race2 = new Race("race2", LocalDate.now().plusWeeks(10), "Gravel", 100, "Fire Road", true, LocalDate.now().plusWeeks(3), 50);
-        race2.addCategory(catAdvanced);
+ // raceEvent1: official, requires Beginner license
+        RaceEvent raceEvent1 = new RaceEvent("raceEvent1", LocalDate.now().plusWeeks(6), "Road", 25, "Around Lake", true, LocalDate.now().plusWeeks(2));
+        raceEvent1.addRace(race1);
+        raceEvent1.addRace(race2);
+        raceEvent1.addRace(race3);
+        raceEvent1.addRace(race4);
+        raceEvent1.addRace(race5);
 
-        // race3: not official, no license required
-        Race race3 = new Race("race3", LocalDate.now().plusWeeks(15), "Mountain", 15, "Up Mountain", false, LocalDate.now().plusWeeks(5), 500);
+        // raceEvent2: official, requires Advanced license
+        RaceEvent raceEvent2 = new RaceEvent("raceEvent2", LocalDate.now().plusWeeks(10), "Gravel", 100, "Fire Road", true, LocalDate.now().plusWeeks(3));
+        raceEvent2.addRace(race1);
+        raceEvent2.addRace(race2);
+        raceEvent2.addRace(race3);
+        raceEvent2.addRace(race4);
+        raceEvent2.addRace(race5);
 
-        raceDatabase.addRace(race1);
-        raceDatabase.addRace(race2);
-        raceDatabase.addRace(race3);
+        // raceEvent3: not official, no license required
+        RaceEvent raceEvent3 = new RaceEvent("raceEvent3", LocalDate.now().plusWeeks(15), "Mountain", 15, "Up Mountain", false, LocalDate.now().plusWeeks(5));
+        raceEvent3.addRace(race1);
+        raceEvent3.addRace(race2);
+        raceEvent3.addRace(race3);
+        raceEvent3.addRace(race4);
+        raceEvent3.addRace(race5);
+
+        raceDatabase.addRaceEvent(raceEvent1);
+        raceDatabase.addRaceEvent(raceEvent2);
+        raceDatabase.addRaceEvent(raceEvent3);
 
         // racer1 has a Beginner license
-        License license1 = new License("lic1", true, LocalDate.now(), LocalDate.now().plusYears(1), catBeginner);
+        License license1 = new License("lic1", true, LocalDate.now(), LocalDate.now().plusYears(1), cat1);
         racer1.license = license1;
 
         Result result1 = new Result("res1", 1);

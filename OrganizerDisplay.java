@@ -48,12 +48,12 @@ public class OrganizerDisplay {
 
     public void displayRaceManagementPage(RaceDatabase raceDatabase) {
         System.out.println("------ Race Management ------");
-        System.out.printf("| %-10s | %-15s | %-10s | %-10s | %-15s |%n", "Race ID", "Date", "Type", "Miles", "Participant Limit");
-        System.out.println("--------------------------------------------------------------------");
+        System.out.printf("| %-10s | %-15s | %-10s | %-10s |%n", "Race ID", "Date", "Type", "Miles");
+        System.out.println("---------------------------------------------------------");
 
-        for (Race race : raceDatabase.raceList.values()) {
-            System.out.printf(" %-12s   %-16s   %-11s   %-11d   %d%n",
-                race.getRaceID(), race.getDate(), race.getType(), race.getMiles(), race.getParticipantLimit());
+        for (RaceEvent race : raceDatabase.raceList.values()) {
+            System.out.printf(" %-12s   %-16s   %-11s   %-11d  %n",
+                race.getRaceID(), race.getDate(), race.getType(), race.getMiles());
         }
     }
 

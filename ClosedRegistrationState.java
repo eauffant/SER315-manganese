@@ -1,11 +1,11 @@
 public class ClosedRegistrationState implements RegistrationState {
     @Override
-    public void openRegistration(Race race) {
+    public void openRegistration(RaceEvent race) {
         race.setRegistrationState(new OpenRegistrationState());
     }
 
     @Override
-    public void closeRegistration(Race race){
+    public void closeRegistration(RaceEvent race){
          //throw new IllegalStateException("Registration is already closed."); // need to implement catch
     }
 
