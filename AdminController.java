@@ -18,7 +18,7 @@ public class AdminController extends UserController implements Subject {
 
     @Override
     public void removeObserver(Observer o) {
-        subscribers.add(o);
+        subscribers.remove(o);
     }
 
     @Override

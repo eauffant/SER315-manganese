@@ -61,6 +61,10 @@ public class OrganizerController extends UserController {
             raceEvent.setIsOffical(isOpen);
             String status = isOpen ? "opened" : "closed";
             System.out.println("Registration " + status + " for race: " + raceId);
+        Race race = raceDatabase.getRace(raceId);
+        if (race != null) {
+            race.openRegistration();
+            System.out.println("Registration is now open.");
         } else {
             System.out.println("Race not found.");
         }
@@ -70,6 +74,21 @@ public class OrganizerController extends UserController {
         RaceEvent raceEvent = raceDatabase.getRace(raceId);
         if (raceEvent != null) {
             raceEvent.getRaces().get(category-1).setParticipantLimit(newLimit);
+    public void closeRegistration(String raceId) {
+        Race race = raceDatabase.getRace(raceId);
+        if (race != null) {
+            race.closeRegistration();
+            System.out.println("Registration is now closed.");
+        } else {
+            System.out.println("Race not found.");
+        }
+    }
+
+
+    public void manageRegistrationLimits(String raceId, int newLimit) {
+        Race race = raceDatabase.getRace(raceId);
+        if (race != null) {
+            race.setParticipantLimit(newLimit);
             System.out.println("Participant limit updated to " + newLimit);
         } else {
             System.out.println("Race not found.");

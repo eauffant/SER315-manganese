@@ -5,6 +5,9 @@ public class Race {
     int participantLimit;
     Category category;
     ArrayList<User> racersRegistered = new ArrayList<>();
+    RegistrationState registrationState;    // State Design Pattern usage
+    OfficialityState officialityState;
+    CapacityState capacityState;
 
     public Race(int participantLimit, Category category) {
         this.participantLimit = participantLimit;
