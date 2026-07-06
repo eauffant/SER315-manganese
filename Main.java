@@ -82,8 +82,8 @@ public class Main {
         raceDatabase.addRaceEvent(raceEvent3);
 
         // racer1 has a Beginner license
-        License license1 = new License("lic1", true, LocalDate.now(), LocalDate.now().plusYears(1), cat1);
-        racer1.license = license1;
+        //License license1 = new License("lic1", true, LocalDate.now(), LocalDate.now().plusYears(1), cat1);
+        //racer1.license = license1;
 
         Result result1 = new Result("res1", 1);
         Result result2 = new Result("res2", 5);
@@ -95,6 +95,7 @@ public class Main {
 
         // --- Main menu loop ---
         int choice = 0;
+        userController.login();
         while (choice != 5) {
             System.out.println("\n====== Race Management System ======");
             System.out.println("1. User actions");
@@ -150,6 +151,7 @@ public class Main {
         if (choice == 1) {
             racerDisplay.displayAllRaces(raceDatabase);
         } else if (choice == 2) {
+            racerDisplay.displayAllRaces(raceDatabase);
             racerController.registerForRace(currentRacer);
         }
     }

@@ -28,7 +28,7 @@ public class RacerDisplay {
         System.out.println("------ Purchase License ------");
         System.out.print("Enter License ID: ");
         String licenseId = scnr.nextLine();
-        System.out.print("Enter Category Level (Beginner/Intermediate/Advanced): ");
+        System.out.print("Enter Category Level (1, 2, 3, 4, 5): ");
         String categoryLevel = scnr.nextLine();
         return new String[]{licenseId, categoryLevel};
     }
