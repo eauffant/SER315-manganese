@@ -1,3 +1,6 @@
+import Model.*;
+import View.*;
+import Controller.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -154,7 +157,7 @@ public class Main {
         } else if (choice == 2) {
             userController.login();
         } else if (choice == 3) {
-            userDisplay.displayAllUsers(userDatabase.userList.values());
+            userDisplay.displayAllUsers(userDatabase.getAllUsers());
         }
     }
 
@@ -166,9 +169,9 @@ public class Main {
         int choice = Integer.parseInt(scnr.nextLine());
 
         if (choice == 1) {
-            racerDisplay.displayAllRaces(raceDatabase.raceList.values());
+            racerDisplay.displayAllRaces(raceDatabase.getAllRaces());
         } else if (choice == 2) {
-            racerDisplay.displayAllRaces(raceDatabase.raceList.values());
+            racerDisplay.displayAllRaces(raceDatabase.getAllRaces());
             racerController.registerForRace(currentRacer);
         }
     }
