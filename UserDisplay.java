@@ -1,8 +1,13 @@
+import java.util.Collection;
 import java.util.Scanner;
 
 public class UserDisplay {
 
-    Scanner scnr = new Scanner(System.in);
+    Scanner scnr;
+
+    public UserDisplay(Scanner scnr) {
+        this.scnr = scnr;
+    }
 
     public String[] displaySignUpPage() {
         System.out.println("------ Sign Up ------");
@@ -64,14 +69,18 @@ public class UserDisplay {
 
     }
 
-    public void displayAllUsers(UserDatabase db) {
+    public void displayAllUsers(Collection<User> users) {
         System.out.printf("| %-20s | %-20s | %-15s | %-30s |%n", "Name", "User ID", "User Type", "Email");
         System.out.println("--------------------------------------------------------------------------------------------------");
-        
-        for(User user : db.userList.values()) {
+
+        for(User user : users) {
             System.out.printf(" %-22s  %-21s  %-16s  %-31s%n", user.getName(), user.getUserID(), user.getUserType(), user.getEmail());
-            
+
         }
+    }
+
+    public void displayMessage(String message) {
+        System.out.println(message);
     }
 
 }

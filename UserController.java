@@ -33,12 +33,12 @@ public class UserController {
         } else if (userType.equals("Administrator")) {
             return new Administrator(userID, password, name, userType, email);
         } else {
-            System.out.println("Invalid user type. Must be Racer, Organizer, or Administrator.");
+            userDisplay.displayMessage("Invalid user type. Must be Racer, Organizer, or Administrator.");
             return null;
         }
     }
 
-    public void login() {
+    public boolean login() {
         String[] loginFields = userDisplay.displayLoginPage();
 
         String userID = loginFields[0];
@@ -46,13 +46,18 @@ public class UserController {
 
         User curUser = userDatabase.getUser(userID);
 
-        if(curUser.getPassword().equals(password)) {
-            System.out.println("Login Successful");
+        if (curUser != null && curUser.getPassword().equals(password)) {
+            currentUser = curUser;
+            userDisplay.displayMessage("Login Successful");
+            return true;
+        } else {
+            userDisplay.displayMessage("Login Failed");
+            return false;
         }
-        else {
-            System.out.println("Login Failed");
-        }
+    }
 
+    public User getCurrentUser() {
+        return currentUser;
     }
 
     public void updateProfile() {

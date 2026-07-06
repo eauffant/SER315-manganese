@@ -33,11 +33,11 @@ public class AdminController extends UserController implements Subject {
     }
 
     public void manageUsers() {
-        adminDisplay.displayUserManagementPage(userDatabase);
+        adminDisplay.displayUserManagementPage(userDatabase.userList.values());
     }
 
     public void manageLicenses() {
-        System.out.println("Managing licenses...");
+        adminDisplay.displayMessage("Managing licenses...");
     }
 
     public void manageSystemSettings() {
@@ -48,6 +48,29 @@ public class AdminController extends UserController implements Subject {
         Notification notification = new Notification("notif-" + racer.getUserID(), message, type, LocalDate.now(), racer);
         notification.send();
         adminDisplay.displayNotificationPage(notification);
+    }
+
+    public void displayObserverManagementMenu() {
+        adminDisplay.displayObserverManagementMenu();
+    }
+
+    public void manageObserver(String racerUserId, String choice) {
+        User user = userDatabase.getUser(racerUserId);
+        if (!(user instanceof Racer)) {
+            adminDisplay.displayMessage("Racer not found.");
+            return;
+        }
+        Racer racer = (Racer) user;
+
+        if (choice.equals("1")) {
+            addObserver(racer);
+            adminDisplay.displayMessage(racer.getName() + " added as observer.");
+        } else if (choice.equals("2")) {
+            removeObserver(racer);
+            adminDisplay.displayMessage(racer.getName() + " removed as observer.");
+        } else {
+            adminDisplay.displayMessage("Invalid choice.");
+        }
     }
 
 }

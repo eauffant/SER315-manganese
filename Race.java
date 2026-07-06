@@ -40,5 +40,9 @@ public class Race {
         return this.capacityState.addRacer(this, racer);
     }
 
+    public boolean isRegistrationFull() {
+        return this.capacityState instanceof FullCapacityState;
+    }
+
 
 }

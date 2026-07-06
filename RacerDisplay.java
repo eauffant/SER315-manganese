@@ -1,19 +1,24 @@
+import java.util.Collection;
 import java.util.Scanner;
 
 public class RacerDisplay {
 
-    Scanner scnr = new Scanner(System.in);
+    Scanner scnr;
+
+    public RacerDisplay(Scanner scnr) {
+        this.scnr = scnr;
+    }
 
     public String displayRegistrationPage() {
         System.out.print("Select Race by entering Race ID: ");
         return scnr.nextLine();
     }
 
-    public void displayAllRaces(RaceDatabase raceDb) {
+    public void displayAllRaces(Collection<RaceEvent> races) {
         System.out.printf("| %-10s | %-15s | %-10s | %-13s | %-10s | %-15s | %-25s |%n", "Race ID", "Date", "Race Type", "Length (Miles)", "Route", "Is It Official?", "Last Day of Registration");
         System.out.println("----------------------------------------------------------------------------------------------------------------------");
 
-        for (RaceEvent race : raceDb.raceList.values()) {
+        for (RaceEvent race : races) {
             System.out.printf(" %-10s   %-15s   %-10s   %-15d   %-12s   %-17s  %-25s %n", race.getRaceID(), race.getDate(), race.getType(), race.getMiles(), race.getRoute(), race.requireLicense(), race.getLastDayOfRegistration());
         }
     }
@@ -31,6 +36,14 @@ public class RacerDisplay {
         System.out.print("Enter Category Level (1, 2, 3, 4, 5): ");
         String categoryLevel = scnr.nextLine();
         return new String[]{licenseId, categoryLevel};
+    }
+
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
+    public void displayRegistrationSuccess(String registrationId) {
+        System.out.println("Registration successful! Registration ID: " + registrationId);
     }
 
 }

@@ -1,8 +1,13 @@
+import java.util.Collection;
 import java.util.Scanner;
 
 public class OrganizerDisplay {
 
-    Scanner scnr = new Scanner(System.in);
+    Scanner scnr;
+
+    public OrganizerDisplay(Scanner scnr) {
+        this.scnr = scnr;
+    }
 
     public String[] displayRaceCreationPage() {
         System.out.println("------ Create Race ------");
@@ -46,15 +51,19 @@ public class OrganizerDisplay {
         return new String[]{resultId, placement};
     }
 
-    public void displayRaceManagementPage(RaceDatabase raceDatabase) {
+    public void displayRaceManagementPage(Collection<RaceEvent> races) {
         System.out.println("------ Race Management ------");
         System.out.printf("| %-10s | %-15s | %-10s | %-10s |%n", "Race ID", "Date", "Type", "Miles");
         System.out.println("---------------------------------------------------------");
 
-        for (RaceEvent race : raceDatabase.raceList.values()) {
+        for (RaceEvent race : races) {
             System.out.printf(" %-12s   %-16s   %-11s   %-11d  %n",
                 race.getRaceID(), race.getDate(), race.getType(), race.getMiles());
         }
+    }
+
+    public void displayMessage(String message) {
+        System.out.println(message);
     }
 
 }

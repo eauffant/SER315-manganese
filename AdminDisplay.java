@@ -1,11 +1,13 @@
+import java.util.Collection;
+
 public class AdminDisplay {
 
-    public void displayUserManagementPage(UserDatabase userDatabase) {
+    public void displayUserManagementPage(Collection<User> users) {
         System.out.println("------ User Management ------");
         System.out.printf("| %-20s | %-20s | %-15s | %-30s |%n", "Name", "User ID", "User Type", "Email");
         System.out.println("--------------------------------------------------------------------------------------------------");
 
-        for (User user : userDatabase.userList.values()) {
+        for (User user : users) {
             System.out.printf(" %-22s  %-21s  %-16s  %-31s%n",
                 user.getName(), user.getUserID(), user.getUserType(), user.getEmail());
         }
@@ -23,6 +25,17 @@ public class AdminDisplay {
         System.out.println("Message: " + notification.getMessage());
         System.out.println("Sent To: " + notification.getSentTo().getName());
         System.out.println("Date Sent: " + notification.getDateSent());
+    }
+
+    public void displayMessage(String message) {
+        System.out.println(message);
+    }
+
+    public void displayObserverManagementMenu() {
+        System.out.println("------ Manage Racer Notifications ------");
+        System.out.println("1. Add racer as observer");
+        System.out.println("2. Remove racer as observer");
+        System.out.print("Choose: ");
     }
 
 }

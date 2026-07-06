@@ -28,11 +28,11 @@ public class OrganizerController extends UserController {
         int participantLimit = Integer.parseInt(raceFields[7]);
         RaceEvent newRace = new RaceEvent(raceId, date, type, miles, route, officialStatus, lastDayOfRegistration);
         raceDatabase.addRaceEvent(newRace);
-        System.out.println("Race created successfully!");
+        organizerDisplay.displayMessage("Race created successfully!");
     }
 
     public void manageRace() {
-        organizerDisplay.displayRaceManagementPage(raceDatabase);
+        organizerDisplay.displayRaceManagementPage(raceDatabase.raceList.values());
     }
 
     public void enterResults() {
@@ -43,16 +43,16 @@ public class OrganizerController extends UserController {
 
         Result newResult = new Result(resultId, placement);
         resultsDatabase.addResult(newResult);
-        System.out.println("Result entered successfully!");
+        organizerDisplay.displayMessage("Result entered successfully!");
     }
 
     public void openRegistration(String raceId) {
         RaceEvent race = raceDatabase.getRace(raceId);
         if (race != null) {
             race.openRegistration();
-            System.out.println("Registration is now open.");
+            organizerDisplay.displayMessage("Registration is now open.");
         } else {
-            System.out.println("Race not found.");
+            organizerDisplay.displayMessage("Race not found.");
         }
     }
 
@@ -60,9 +60,9 @@ public class OrganizerController extends UserController {
         RaceEvent race = raceDatabase.getRace(raceId);
         if (race != null) {
             race.closeRegistration();
-            System.out.println("Registration is now closed.");
+            organizerDisplay.displayMessage("Registration is now closed.");
         } else {
-            System.out.println("Race not found.");
+            organizerDisplay.displayMessage("Race not found.");
         }
     }
 
@@ -71,9 +71,9 @@ public class OrganizerController extends UserController {
         Race race = raceDatabase.getRace(raceId).getRaces().get(categoryLevel);
         if (race != null) {
             race.setParticipantLimit(newLimit);
-            System.out.println("Participant limit updated to " + newLimit);
+            organizerDisplay.displayMessage("Participant limit updated to " + newLimit);
         } else {
-            System.out.println("Race not found.");
+            organizerDisplay.displayMessage("Race not found.");
         }
     }
 

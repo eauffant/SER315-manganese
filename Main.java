@@ -15,9 +15,9 @@ public class Main {
         RaceReviewDatabase reviewDatabase = new RaceReviewDatabase();
 
         // --- Set up displays ---
-        UserDisplay userDisplay = new UserDisplay();
-        RacerDisplay racerDisplay = new RacerDisplay();
-        OrganizerDisplay organizerDisplay = new OrganizerDisplay();
+        UserDisplay userDisplay = new UserDisplay(scnr);
+        RacerDisplay racerDisplay = new RacerDisplay(scnr);
+        OrganizerDisplay organizerDisplay = new OrganizerDisplay(scnr);
         AdminDisplay adminDisplay = new AdminDisplay();
 
         // --- Set up controllers ---
@@ -93,9 +93,26 @@ public class Main {
         Review review1 = new Review("rev1", 5, "Great race, well organized!");
         reviewDatabase.addReview(review1);
 
+        // --- Start screen: login or sign up ---
+        boolean loggedIn = false;
+        while (!loggedIn) {
+            System.out.println("\n====== Race Management System ======");
+            System.out.println("1. Login");
+            System.out.println("2. Sign up");
+            System.out.print("Choose: ");
+            int startChoice = Integer.parseInt(scnr.nextLine());
+
+            if (startChoice == 1) {
+                loggedIn = userController.login();
+            } else if (startChoice == 2) {
+                userController.userSignUp();
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        }
+
         // --- Main menu loop ---
         int choice = 0;
-        userController.login();
         while (choice != 5) {
             System.out.println("\n====== Race Management System ======");
             System.out.println("1. User actions");
@@ -137,7 +154,7 @@ public class Main {
         } else if (choice == 2) {
             userController.login();
         } else if (choice == 3) {
-            userDisplay.displayAllUsers(userDatabase);
+            userDisplay.displayAllUsers(userDatabase.userList.values());
         }
     }
 
@@ -149,9 +166,9 @@ public class Main {
         int choice = Integer.parseInt(scnr.nextLine());
 
         if (choice == 1) {
-            racerDisplay.displayAllRaces(raceDatabase);
+            racerDisplay.displayAllRaces(raceDatabase.raceList.values());
         } else if (choice == 2) {
-            racerDisplay.displayAllRaces(raceDatabase);
+            racerDisplay.displayAllRaces(raceDatabase.raceList.values());
             racerController.registerForRace(currentRacer);
         }
     }
@@ -178,6 +195,7 @@ public class Main {
         System.out.println("1. View all users");
         System.out.println("2. Send notification to racer1");
         System.out.println("3. System settings");
+        System.out.println("4. Manage racer notification subscription");
         System.out.print("Choose: ");
         int choice = Integer.parseInt(scnr.nextLine());
 
@@ -187,6 +205,12 @@ public class Main {
             adminController.sendNotification("Your registration is confirmed!", "Info");
         } else if (choice == 3) {
             adminController.manageSystemSettings();
+        } else if (choice == 4) {
+            System.out.print("Enter racer User ID: ");
+            String racerUserId = scnr.nextLine();
+            adminController.displayObserverManagementMenu();
+            String observerChoice = scnr.nextLine();
+            adminController.manageObserver(racerUserId, observerChoice);
         }
     }
 

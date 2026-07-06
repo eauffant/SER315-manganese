@@ -18,13 +18,13 @@ public class RacerController {
         RaceEvent raceEvent = raceDatabase.getRace(raceId);
 
         if (raceEvent == null) {
-            System.out.println("Race not found.");
+            racerDisplay.displayMessage("Race not found.");
             return;
         }
 
         // Delegates to RegistrationState to answer registration open?
         if (!raceEvent.register()) {
-            System.out.println("Registration is currently closed for this race.");
+            racerDisplay.displayMessage("Registration is currently closed for this race.");
             return;
         }
 
@@ -35,37 +35,49 @@ public class RacerController {
                 // Prompt racer to buy a license
                 boolean wantsToBuy = racerDisplay.displayLicensePurchasePrompt();
                 if (!wantsToBuy) {
-                    System.out.println("A valid license is required. Registration cancelled.");
+                    racerDisplay.displayMessage("A valid license is required. Registration cancelled.");
                     return;
                 }
                 // Did racer purchase a license?
                 boolean purchased = purchaseLicense(racer);
                 if (!purchased) {
-                    System.out.println("License purchase failed. Registration cancelled.");
+                    racerDisplay.displayMessage("License purchase failed. Registration cancelled.");
                     return;
                 }
             }
         }
 
+        // Unofficial races require no license, so there is no category to look up from a license.
+        // They default any unlicensed racer into the base category (level 1).
+        int categoryLevel = racer.getLicense() != null ? racer.getLicense().getCategory().getCategoryLevel() : 1;
+        Race targetRace = raceEvent.getRaces().get(categoryLevel);
+        if (targetRace == null) {
+            racerDisplay.displayMessage("You do not meet the category requirements for this race.");
+            return;
+        }
+
         // Delegates to CapacityState to answer is race full?
-        if (!raceEvent.getRaces().get(racer.getLicense().getCategory().getCategoryLevel()).addRacer(racer)) {
-            System.out.println("This race is full.");
+        if (targetRace.isRegistrationFull()) {
+            racerDisplay.displayMessage("This race is full.");
             return;
         }
 
         // Does racer meet category for race?
-        if (!meetsCategoryRequirement(racer, raceEvent.getRaces().get(racer.getLicense().getCategory().getCategoryLevel()))) {
-            System.out.println("You do not meet the category requirements for this race.");
+        if (racer.getLicense() != null && !meetsCategoryRequirement(racer, targetRace)) {
+            racerDisplay.displayMessage("You do not meet the category requirements for this race.");
             return;
         }
 
         // Racer registers for race — save to database
+        if (!targetRace.addRacer(racer)) {
+            racerDisplay.displayMessage("This race is full.");
+            return;
+        }
         String registrationId = "reg-" + racer.getUserID() + "-" + raceId;
         Registration registration = new Registration(registrationId, LocalDate.now(), true);
         registrationDatabase.addRegistration(registration);
-        raceEvent.getRaces().get(racer.getLicense().getCategory().getCategoryLevel()).racersRegistered.add(racer);
 
-        System.out.println("Registration successful! Registration ID: " + registrationId);
+        racerDisplay.displayRegistrationSuccess(registrationId);
     }
 
     public boolean purchaseLicense(Racer racer) {
@@ -80,7 +92,7 @@ public class RacerController {
         Category category = new Category(categoryLevel, "");
         License newLicense = new License(licenseId, true, LocalDate.now(), LocalDate.now().plusYears(1), category);
         racer.license = newLicense;
-        System.out.println("License purchased successfully!");
+        racerDisplay.displayMessage("License purchased successfully!");
         return true;
     }
 
