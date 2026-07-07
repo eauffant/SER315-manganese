@@ -13,26 +13,31 @@ public class RacerDisplay {
     }
 
     public String displayRegistrationPage() {
-        boolean session = true;
-        while (session) {
+        while (true) {
+            System.out.println("\n\n");
             System.out.println("Select Race by entering Race ID ");
             System.out.println("OR type logout to exit registration:");
-            String selectedRace = scnr.nextLine();
-            if (selectedRace.equals("logout")) {session = false;}
 
-            System.out.println("Register for race?: " + selectedRace);
-            System.out.println("1: Yes");
-            System.out.println("2: No");
-            String confirmSelection = scnr.nextLine();
-            if (confirmSelection.equals("1")) {
-                session = false;
-                return selectedRace;
-            } else if (!confirmSelection.equals("1") && !confirmSelection.equals("2")) {
-                System.out.println("Invalid selection");
+            String selectedRace = scnr.nextLine().trim();
+
+            if (selectedRace.equalsIgnoreCase("logout")) {
+                return null;
             }
 
+            System.out.println("Register for race?: " + selectedRace + " (type 1 or 2)");
+            System.out.println("1: Yes");
+            System.out.println("2: No");
+
+            String confirmSelection = scnr.nextLine().trim();
+
+            if (confirmSelection.equals("1")) {
+                return selectedRace;
+            } else if (confirmSelection.equals("2")) {
+                System.out.println("Registration cancelled. Choose another race.");
+            } else {
+                System.out.println("Invalid selection");
+            }
         }
-        return null;
     }
 
     public void displayAllRaces(Collection<RaceEvent> races) {
@@ -45,9 +50,8 @@ public class RacerDisplay {
     }
 
     public boolean displayLicensePurchasePrompt() {
-        scnr.nextLine();
         System.out.println("This race requires a license. Would you like to purchase one? (yes/no): ");
-        String answer = scnr.nextLine();
+        String answer = scnr.nextLine().trim();
         if(answer.equalsIgnoreCase("no")) {
             System.out.println("Valid license required");
             System.out.println("Back to main menu or logout? (Type 1 or 2)");
