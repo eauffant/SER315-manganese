@@ -1,5 +1,6 @@
 package View;
 
+import Controller.UserController;
 import Model.*;
 import java.util.Collection;
 import java.util.Scanner;
@@ -64,8 +65,24 @@ public class UserDisplay {
         }
     }
 
-    public static void displayMessage(String message) {
+    public void displayMessage(String message) {
         System.out.println(message);
+    }
+
+    public void displayInvalid() {
+        System.out.println("Invalid choice");
+    }
+
+    public void displayFailedLogin() {
+        System.out.println("Login Failed");
+    }
+
+    public void displaySuccessLogin() {
+        System.out.println("Login Successful");
+    }
+
+    public void displayInvalidType() {
+        System.out.println("Invalid user type. Must be Racer, Organizer, or Administrator.");
     }
 
     public static int displayLogin(){

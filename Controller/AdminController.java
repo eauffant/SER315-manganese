@@ -61,7 +61,7 @@ public class AdminController extends UserController implements Subject {
     public void manageObserver(String racerUserId, String choice) {
         User user = userDatabase.getUser(racerUserId);
         if (!(user instanceof Racer)) {
-            adminDisplay.displayMessage("Racer not found.");
+            adminDisplay.displayRacerNotFound();
             return;
         }
         Racer racer = (Racer) user;
@@ -73,7 +73,7 @@ public class AdminController extends UserController implements Subject {
             removeObserver(racer);
             adminDisplay.displayMessage(racer.getName() + " removed as observer.");
         } else {
-            adminDisplay.displayMessage("Invalid choice.");
+            adminDisplay.displayInvalid();
         }
     }
 

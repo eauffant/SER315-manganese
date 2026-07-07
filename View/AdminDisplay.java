@@ -37,6 +37,14 @@ public class AdminDisplay {
         System.out.println(message);
     }
 
+    public void displayRacerNotFound() {
+        System.out.println("Racer not found.");
+    }
+
+    public void displayInvalid() {
+        System.out.println("Invalid choice");
+    }
+
     public void displayObserverManagementMenu() {
         System.out.println("------ Manage Racer Notifications ------");
         System.out.println("1. Add racer as observer");

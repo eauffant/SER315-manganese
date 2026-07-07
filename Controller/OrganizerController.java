@@ -56,7 +56,7 @@ public class OrganizerController extends UserController {
             race.openRegistration();
             organizerDisplay.displayMessage("Registration is now open.");
         } else {
-            organizerDisplay.displayMessage("Race not found.");
+            organizerDisplay.displayRaceNotFound();
         }
     }
 
@@ -66,7 +66,7 @@ public class OrganizerController extends UserController {
             race.closeRegistration();
             organizerDisplay.displayMessage("Registration is now closed.");
         } else {
-            organizerDisplay.displayMessage("Race not found.");
+            organizerDisplay.displayRaceNotFound();
         }
     }
 
@@ -77,7 +77,7 @@ public class OrganizerController extends UserController {
             race.setParticipantLimit(newLimit);
             organizerDisplay.displayMessage("Participant limit updated to " + newLimit);
         } else {
-            organizerDisplay.displayMessage("Race not found.");
+            organizerDisplay.displayRaceNotFound();
         }
     }
 

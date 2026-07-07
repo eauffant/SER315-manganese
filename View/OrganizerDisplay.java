@@ -70,6 +70,10 @@ public class OrganizerDisplay {
         System.out.println(message);
     }
 
+    public void displayRaceNotFound() {
+        System.out.println("Race not found.");
+    }
+
     public static int displayOrganizerMenu() {
         System.out.println("\n-- Organizer Menu --");
         System.out.println("1. Create a race");

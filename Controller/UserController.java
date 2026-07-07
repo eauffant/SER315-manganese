@@ -56,7 +56,7 @@ public class UserController {
             } else if (startChoice == 2) {
                 userSignUp();
             } else {
-                UserDisplay.displayMessage("Invalid Choice");
+                userDisplay.displayInvalid();
             }
         }
     }
@@ -84,7 +84,7 @@ public class UserController {
         } else if (userType.equals("Administrator")) {
             return new Administrator(userID, password, name, userType, email);
         } else {
-            userDisplay.displayMessage("Invalid user type. Must be Racer, Organizer, or Administrator.");
+            userDisplay.displayInvalidType();
             return null;
         }
     }
@@ -99,7 +99,7 @@ public class UserController {
 
         if (curUser != null && curUser.getPassword().equals(password)) {
             currentUser = curUser;
-            userDisplay.displayMessage("Login Successful");
+            userDisplay.displaySuccessLogin();
 
             if (curUser.getUserType().equals("Administrator")) {
                 adminMenu(adminController, adminDisplay);
@@ -113,7 +113,7 @@ public class UserController {
 
             return true;
         } else {
-            userDisplay.displayMessage("Login Failed");
+            userDisplay.displayFailedLogin();
             return false;
         }
     }
@@ -136,7 +136,7 @@ public class UserController {
             } else if (choice == 3) {
                 inRacerMenu = false;
             } else{
-                userDisplay.displayMessage("Invalid choice");
+                userDisplay.displayInvalid();
             }
         }
     }
@@ -154,7 +154,7 @@ public class UserController {
             } else if (choice == 4) {
                 inOrganizerrMenu = false;
             } else {
-                userDisplay.displayMessage("Invalid choice");
+                userDisplay.displayInvalid();
             }
         }
     }
@@ -179,7 +179,7 @@ public class UserController {
             } else if (choice == 5) {
                 inAdminMenu = false;
             } else  {
-                userDisplay.displayMessage("Invalid choice");
+                userDisplay.displayInvalid();
             }
         }
     }

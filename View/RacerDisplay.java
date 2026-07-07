@@ -50,7 +50,7 @@ public class RacerDisplay {
     }
 
     public boolean displayLicensePurchasePrompt() {
-        System.out.println("This race requires a license. Would you like to purchase one? (yes/no): ");
+        System.out.println("This race requires a license. Would you like to purchase one with your saved credit card? (yes/no): ");
         String answer = scnr.nextLine().trim();
         if(answer.equalsIgnoreCase("no")) {
             System.out.println("Valid license required");
