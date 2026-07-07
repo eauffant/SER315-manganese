@@ -32,10 +32,14 @@ class Administrator {
 }
 
 class RacerController {
-    +purchaseLicense()
-    +registerForRace()
-    +reviewRace()
-    +upgradeCategory()
+  -int notFound
+  -int registrationClosed
+  -int invalidCategory
+  -int raceFull
+  +RacerController()
+  +registerForRace() void
+  +purchaseLicense() boolean
+  +meetsCategoryRequirement() boolean
 }
 
 class License {
@@ -97,10 +101,17 @@ class Race {
 }
 
 class AdminController {
-    +manageUsers()
-    +manageLicenses()
-    +manageSystemSettings()
-    +sendNotification()
+  +AdminController()
+  +addObserver() void
+  +removeObserver() void
+  +notifyObservers() void
+  +sendNotification() void
+  +manageUsers() void
+  +manageLicenses() void
+  +manageSystemSettings() void
+  +sendNotification() void
+  +displayObserverManagementMenu() void
+  +manageObserver() void
 }
 
 class Notification {
@@ -113,35 +124,59 @@ class Notification {
 
 
 class UserController {
-    +signUp()
-    +login()
-    +updateProfile()
+  -User currentUser
+  +UserController()
+  +startSession() void
+  +userSignUp() void
+  +createUser() User
+  +login() boolean
+  +getCurrentUser() User
+  +updateProfile() void
+  +racerMenu() void
+  +organizerMenu() void
+  +adminMenu() void
 }
 
 class UserDisplay {
-    +displayLoginPage()
-    +displayProfilePage()
+    +UserDisplay(scnr: Scanner)
+    +displaySignUpPage() String[]
+    +displayLoginPage() String[]
+    +displayProfilePage() void
+    +displayAllUsers() void
+    +displayMessage() void
+    +displayLogin() int
 }
 
 class RacerDisplay {
-    +displayRegistrationPage()
-    +displaySignUpPage()
-    +displayRaceReview()
-    +displayRacerInfo()
-    +displayRaceResults()
-    +displayRaceInfo()
+    +RacerDisplay()
+    +displayRegistrationPage() String
+    +displayAllRaces() void
+    +displayLicensePurchasePrompt() boolean
+    +displayLicensePurchasePage() String[]
+    +displayMessage(message: String) void
+    +displayRegistrationSuccess() void
+    +displayRegistrationFailure() void
+    +showRacerMenu() int
 }
 
 class OrganizerDisplay {
-    +displayRaceCreationPage()
-    +displayResultsEntryPage()
-    +displayRaceManagementPage()
+    +OrganizerDisplay(scnr: Scanner)
+    +displayRaceCreationPage() String[]
+    +displayResultsEntryPage() String[]
+    +displayRaceManagementPage() void
+    +displayMessage(message: String) void
+    +displayOrganizerMenu() int
 }
 
 class AdminDisplay {
-    +displayUserManagementPage()
-    +displaySystemSettings()
-    +displayNotificationPage()
+    +displayUserManagementPage() void
+    +displaySystemSettings() void
+    +displayNotificationPage() void
+    +displayMessage() void
+    +displayObserverManagementMenu() void
+    +displayAdminMenu() int
+    +displayObserverChoice() String
+    +displayRacerIDPrompt() String
 }
 
 class RaceResultsDatabase {
