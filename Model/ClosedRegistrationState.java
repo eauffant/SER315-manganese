@@ -7,7 +7,7 @@ public class ClosedRegistrationState implements RegistrationState {
 
     @Override
     public void closeRegistration(RaceEvent race){
-         //throw new IllegalStateException("Registration is already closed."); // need to implement catch
+         //throw new IllegalStateException("Registration is already closed.");
     }
 
     @Override

@@ -73,7 +73,7 @@ public class Main {
         userDatabase.addUser(admin1);
 
         Category cat1 = new Category(1, "Beginners Only");
-        Category cat2 = new Category(2, "Beginner to Intermediate Raacers");
+        Category cat2 = new Category(2, "Beginner to Intermediate Racers");
         Category cat3 = new Category(3, "Intermediate Racers");
         Category cat4 = new Category(4, "Semi-Pro Racers");
         Category cat5 = new Category(5, "Professional Competitive Racers");
